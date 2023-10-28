@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="The SVHN dataset is deceptive for probabilistic generative models due to a distribution mismatch.">
+  <meta name="keywords" content="SVHN, SVHN-Remix, Distribution Shift">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SVHN-Remix</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+  </script>
+  <script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+</head>
+<body>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">SVHN-Remix</h1>
+          <h2 class="title is-3 publication-title">The SVHN Dataset Is Deceptive for Probabilistic Generative Models Due to a Distribution Mismatch</h2>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://timx.me">Tim Z. Xiao</a><sup>1,2,*</sup> &nbsp; &nbsp; 
+            </span> 
+            <span class="author-block">
+              <a href="https://jzenn.github.io">Johannes Zenn</a><sup>1,2,*</sup> &nbsp; &nbsp; 
+            </span>
+            <span class="author-block">
+              <a href="https://robamler.github.io">Robert Bamler</a><sup>1</sup>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>University of Tübingen</span> &nbsp; &nbsp; 
+            <span class="author-block"><sup>2</sup>IMPRS-IS</span>
+            </br>
+            <span class="author-block" style="font-size: 15px;"><sup>*</sup>Equal contribution, order determined by coin flip.</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="."
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="."
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Dataset Link. -->
+              <span class="link-block">
+                <a href="#download"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-database"></i>
+                  </span>
+                  <span>Download SVHN-Remix Dataset</span>
+                  </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          The Street View House Numbers <a href="http://ufldl.stanford.edu/housenumbers/">(SVHN) dataset</a> (<a href="http://ufldl.stanford.edu/housenumbers/nips2011_housenumbers.pdf">Netzer et al., 2011</a>) is a popular benchmark dataset in deep learning.
+          Originally designed for digit classification tasks, the SVHN dataset has been widely used as a benchmark for various other tasks including generative modeling.
+          However, with this work, we aim to warn the community about an issue of the SVHN dataset as a benchmark for generative modeling tasks: we discover that the official split into training set and test set of the SVHN dataset are not drawn from the same distribution.
+          We empirically show that this distribution mismatch has little impact on the classification task (which may explain why this issue has not been detected before), but it severely affects the evaluation of probabilistic generative models, such as Variational Autoencoders and diffusion models.
+          As a workaround, we propose to mix and re-split the official training and test set when SVHN is used for tasks other than classification.
+          We publish a new split that we call <b>SVHN-Remix</b> and the indices we used to create it <a href="#download">below</a>.
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <!-- Distribution Shift. -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">What's Wrong With SVHN?</h2>
+
+        <div class="content has-text-justified">
+        <p>
+          We show parts of our analysis of the distribution mismatch in SVHN.
+          More details on our method and the results can be found in the <a href=".">paper</a>.
+        </p>
+        <p>
+          We measure how similar random subsets of training and test set are, and we compare this to how similar two non-overlapping random subsets of the training set are. 
+          In an unbiased training/test split (as, e.g., in CIFAR), both measurements should exhibit similar distances. 
+          But we found that, in SVHN, differences between training and test set are much more different than two random subsets of the training data. 
+          This is shown in Table 1 below. 
+          In detail, we measure distances in <a href="https://en.wikipedia.org/wiki/Fréchet_inception_distance">Fréchet Inception Distance</a> (FID), which measures semantic dissimilarity between two finite sets of images with a feature extractor.
+        </p>
+        <p>
+          Table 1 below shows FIDs evaluated between random subsets of the training set ($\mathcal{D}_\text{train}''$) and the test set ($\mathcal{D}_\text{test}'$).
+          Additionally, Table 1 shows the FID evaluate between two random non-overlapping subsets of the training set ($\mathcal{D}_\text{train}''$ and $\mathcal{D}_\text{train}'$).
+          We find that the FID between training set and test set differs significantly from the FID evaluated between two random non-overlapping subsets of the training set indicating that there is a distribution mismatch between $\mathcal{D}_\text{train}$ and $\mathcal{D}_\text{test}$ for SVHN.
+          As a comparison, for CIFAR-10, the two FIDs are basically indistinguishable.
+        </p>
+        <p>
+          The <a href="https://en.wikipedia.org/wiki/Inception_score">inception score</a> (IS) evaluates how well data points in a set can be classified with a classifier that was trained on a training set, and how diverse their labels are.
+          We calculate the IS of a subset of the training set and a subset of the test set utilizing all remaining training samples as a training set for the classifier.
+          There is not much difference between the IS of the subset of the training set and the subset of the test set for both SVHN and CIFAR-10 as Table 1 shows.
+          This tells us that if we want to measure the sample quality in terms of distribution similarity, we should not use IS as the metric.
+        </p>
+        <p>
+          <b>Table 1</b>: 
+          FID (lower means larger similarity) and IS (higher means better sample quality) on three datasets, averaged over 5 random seeds. For SVHN, we find that the FID between random subsets of the training and test set (bold red) is significantly higher than the FID between non-overlapping subsets of the training set of the same size, while IS for $\mathcal{D}_\text{train}'$ and $\mathcal{D}_\text{test}'$ is similar within all datasets.
+        </p>
+        <table style="width: 100%; border-collapse: collapse; text-align: center;">
+          <tr>
+              <th style="border-right: 1px solid black;">FID ($\downarrow$), IS ($\uparrow$)</th>
+              <th style="">SVHN</th>
+              <th style="background-color:#E8E8E8;">SVHN-Remix</th>
+              <th style="">CIFAR-10</th>
+          </tr>
+          <tr>
+              <td style="border-right: 1px solid black;">$\mathrm{FID}(\mathcal{D}_\text{train}'', \mathcal{D}_\text{train}')$</td>
+              <td style="">3.309 $\pm$ 0.029</td>
+              <td style="background-color:#E8E8E8;">3.334 $\pm$ 0.018</td>
+              <td style="">5.196 $\pm$ 0.040</td>
+          </tr>
+          <tr>
+              <td style="border-right: 1px solid black;">$\mathrm{FID}(\mathcal{D}_\text{train}'', \mathcal{D}_\text{test}')$</td>
+              <td style="color: #8D2D38; font-weight: bold;">16.687 $\pm$ 0.325</td>
+              <td style="background-color:#E8E8E8;">3.326 $\pm$ 0.015</td>
+              <td style="">5.206 $\pm$ 0.031</td>
+          </tr>
+          <tr>
+              <td style="border-right: 1px solid black;">$\mathrm{IS}(\mathcal{D}_\text{train}', \bar{\mathcal{D}}_\text{train})$</td>
+              <td style="">1.132 $\pm$ 0.003</td>
+              <td style="background-color:#E8E8E8;">1.132 $\pm$ 0.005</td>
+              <td style="">1.151 $\pm$ 0.001</td>
+          </tr>
+          <tr>
+              <td style="border-right: 1px solid black;">$\mathrm{IS}(\mathcal{D}_\text{test}', \bar{\mathcal{D}}_\text{train})$</td>
+              <td style="">1.133 $\pm$ 0.002</td>
+              <td style="background-color:#E8E8E8;">1.131 $\pm$ 0.005</td>
+              <td style="">1.151 $\pm$ 0.001</td>
+          </tr>
+        </table>
+
+
+        </div>
+      </div>
+    </div>
+    <!--/ Distribution Shift. -->
+
+
+    <!-- SVHN Remix. -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">SVHN-Remix: A New Split</h2>
+
+        <div class="content has-text-justified">
+          We propose a new split called <b>SVHN-Remix</b> to alleviate the distribution mismatch in SVHN.
+          <b>SVHN-Remix</b> is created by (i) joining the original train set and test set, (ii) shuffling the indices, and (iii) re-splitting the index into a new remixed train set and test set. 
+          We make sure the size of the new training and test set is the same as before, and the number of samples for each class is also preserved for both the new training and test set. 
+          We provide a <a href=".">notebook</a> that implements this process.
+        </div>
+      </div>
+    </div>
+    <!--/ SVHN Remix. -->
+
+    <!-- Implications. -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Implications</h2>
+
+        <div class="content has-text-justified">
+          <p>
+            Below, we summarize the key points of the analysis of implications.
+            More details on our method and the results can be found in the <a href=".">paper</a>.
+          </p>
+          <p>
+            We find that the distribution mismatch has little effect on classification tasks for supervised learning, or on sample quality for generative modeling.
+            Figure 1 (left) shows the loss of a classifier trained on SVHN and SVHN-Remix evaluated on the training sets and test sets.
+            SVHN and SVHN-Remix show similar losses.
+          </p>
+          <p>
+            However, we show that for probabilistic generative models such as Variational Autoencoders (VAEs) and variaional diffusion models (VDM), the mismatch leads to a false assessment of the model performance when evaluating test set likelihoods:
+            test set likelihoods on the SVHN dataset are deceptive since the test set appears to be drawn from a simpler distribution than the training set.
+            Figure 1 (middle left), Figure 1 (middle right), and Figure 1 (right) show bits per dimension (BPD) for SVHN and SVHN-Remix evaluated on the training set and test set during training.
+            For SVHN, the order of training and test set BPD is flipped compared to SVHN-Remix.
+            Since we normally evaluate probabilistic generative models models by their likelihood on the test set,  a distribution mismatch between the training set and test set can lead to false evaluation of these models.
+          </p>
+
+        <p>
+          <b>Figure 1</b>: 
+          (left): classification loss evaluated on training set (dashed) and test set (solid) on SVHN (blue) and SVHN-Remix (green) averaged over five random seeds (lines are means, shaded areas are one standard deviation). 
+          The losses are similar.
+          (middle left) and (middle right) and (right): bits per dimension (BPD) evaluated as a function of training progress on the training set (dotted) and test set (solid) for SVHN (blue) and SVHN-Remix (green).
+          For SVHN, the order of training and test set performance is flipped compared to SVHN-Remix.
+        </p>
+        </div>
+        <div>
+          <div class="results-images-container">
+            <img src="./static/images/classifier_loss.svg" class="results-image" alt="Classifier loss."/>
+            <img src="./static/images/vdm_bpd.svg" class="results-image" alt="Classifier loss."/>
+            <img src="./static/images/svhn_vae_bpd.svg" class="results-images" alt="Classifier loss."/>
+          </div>
+          <!-- <br/> -->
+        </div>
+      </div>
+    </div>
+    <!--/ Implications. -->
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Download. -->
+    <div class="columns is-centered" id="download">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Download</h2>
+
+        <div class="content has-text-justified">
+          <p>
+          We provide the new split <b>SVHN-Remix</b> below for download.
+          We provide files with the original file types and the indices used to create them.
+          Based on the <a href="http://ufldl.stanford.edu/housenumbers/">SVHN dataset</a>, the SVHN-Remix dataset is <b>for non-commercial use only</b>.
+          </p>
+          <div class="column has-text-centered">
+            <h4>Dataset</h4>
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://github.com/jzenn/svhn-remix/releases/download/v1.0.0/train_32x32_remix.mat"
+                   class="external-link button is-normal is-rounded">
+                  <span class="icon">
+                      <i class="fas fa-database"></i>
+                  </span>
+                  <span>SVHN-Remix (Train)</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://github.com/jzenn/svhn-remix/releases/download/v1.0.0/test_32x32_remix.mat"
+                   class="external-link button is-normal is-rounded">
+                  <span class="icon">
+                      <i class="fas fa-database"></i>
+                  </span>
+                  <span>SVHN-Remix (Test)</span>
+                </a>
+              </span>
+              </div>
+              <p></p>
+            <h4>Indices</h4>
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="https://github.com/jzenn/svhn-remix/releases/download/v1.0.0/train_index_remix.npy"
+                   class="external-link button is-normal is-rounded">
+                  <span class="icon">
+                      <i class="fas fa-sort-numeric-up"></i>
+                  </span>
+                  <span>SVHN-Remix Indices (Train)</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://github.com/jzenn/svhn-remix/releases/download/v1.0.0/test_index_remix.npy"
+                   class="external-link button is-normal is-rounded">
+                  <span class="icon">
+                      <i class="fas fa-sort-numeric-up"></i>
+                  </span>
+                  <span>SVHN-Remix Indices (Test)</span>
+                </a>
+              </span>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!--/ Download. -->
+
+  </div>
+</section>
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>
+    @article{xiao2023the,
+      title={The SVHN Dataset Is Deceptive for Probabilistic Generative Models Due to a Distribution Mismatch},
+      author={Xiao, Tim Z. and Zenn, Johannes and Bamler, Robert},
+      journal={NeurIPS 2023 Workshop on Distribution Shifts},
+      year={2023}
+    }
+    </code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            We use the template by  <a
+              href="https://github.com/nerfies/nerfies.github.io">Nerfies</a> for this website.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
