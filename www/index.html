@@ -107,7 +107,7 @@
       <div class="column is-four-fifths">
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
-          The Street View House Numbers <a href="http://ufldl.stanford.edu/housenumbers/">(SVHN) dataset</a> (<a href="http://ufldl.stanford.edu/housenumbers/nips2011_housenumbers.pdf">Netzer et al., 2011</a>) is a popular benchmark dataset in deep learning.
+          The <a href="http://ufldl.stanford.edu/housenumbers/">Street View House Numbers (SVHN) dataset</a> (<a href="http://ufldl.stanford.edu/housenumbers/nips2011_housenumbers.pdf">Netzer et al., 2011</a>) is a popular benchmark dataset in deep learning.
           Originally designed for digit classification tasks, the SVHN dataset has been widely used as a benchmark for various other tasks including generative modeling.
           However, with this work, we aim to warn the community about an issue of the SVHN dataset as a benchmark for generative modeling tasks: we discover that the official split into training set and test set of the SVHN dataset are not drawn from the same distribution.
           We empirically show that this distribution mismatch has little impact on the classification task (which may explain why this issue has not been detected before), but it severely affects the evaluation of probabilistic generative models, such as Variational Autoencoders and diffusion models.
@@ -139,7 +139,7 @@
           In an unbiased training/test split (as, e.g., in CIFAR), both measurements should exhibit similar distances. 
           But we found that, in SVHN, differences between training and test set are much more different than two random subsets of the training data. 
           This is shown in Table 1 below. 
-          In detail, we measure distances in <a href="https://en.wikipedia.org/wiki/Fréchet_inception_distance">Fréchet Inception Distance</a> (FID), which measures semantic dissimilarity between two finite sets of images with a feature extractor.
+          In detail, we measure distances in <a href="https://en.wikipedia.org/wiki/Fréchet_inception_distance">Fréchet inception distance</a> (FID), which measures semantic dissimilarity between two finite sets of images with a feature extractor.
         </p>
         <p>
           Table 1 below shows FIDs evaluated between random subsets of the training set ($\mathcal{D}_\text{train}''$) and the test set ($\mathcal{D}_\text{test}'$).
