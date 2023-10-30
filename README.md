@@ -10,7 +10,7 @@
   <a href="https://robamler.github.io" target="_blank">Robert&nbsp;Bamler</a>
   </span>
   <br/>
-  <sup>&#42;</sup> denotes equal contribution
+  <sup>&#42;</sup> denotes equal contribution, order determined by coin flip
   
 
 
