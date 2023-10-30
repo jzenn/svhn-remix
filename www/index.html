@@ -1,1 +1,287 @@
-Hello World!
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="The SVHN dataset is deceptive for probabilistic generative models due to a distribution mismatch.">
+  <meta name="keywords" content="SVHN, SVHN-Remix, Distribution Shift">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SVHN-Remix</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="https://jzenn.github.io">
+      <span class="icon">
+          <i class="fas fa-home"></i>
+      </span>
+      </a>
+    </div>
+
+  </div>
+</nav>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">SVHN-Remix</h1>
+          <h2 class="title is-3 publication-title">The SVHN Dataset Is Deceptive for Probabilistic Generative Models Due to a Distribution Mismatch</h2>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://timx.me">Tim Z. Xiao</a><sup>1,2,*</sup>,</span> 
+            <span class="author-block">
+              <a href="https://jzenn.github.io">Johannes Zenn</a><sup>1,2,*</sup>,</span>
+            <span class="author-block">
+              <a href="https://robamler.github.io">Robert Bamler</a><sup>1</sup>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>University of Tübingen</span>
+            <span class="author-block"><sup>2</sup>IMPRS-IS</span>
+            <span class="author-block"><sup>*</sup>equal contribution, order determined by coin flip</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="."
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="."
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Dataset Link. -->
+              <span class="link-block">
+                <a href="#download"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-database"></i>
+                  </span>
+                  <span>Download SVHN-Remix</span>
+                  </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          The Street View House Numbers (SVHN) dataset (<a href="http://ufldl.stanford.edu/housenumbers/nips2011_housenumbers.pdf">Netzer et al., 2011</a>) is a popular benchmark dataset in deep learning.
+          Originally designed for digit classification tasks, the SVHN dataset has been widely used as a benchmark for various other tasks including generative modeling.
+          However, with this work, we aim to warn the community about an issue of the SVHN dataset as a benchmark for generative modeling tasks: we discover that the official split into training set and test set of the SVHN dataset are not drawn from the same distribution.
+          We empirically show that this distribution mismatch has little impact on the classification task (which may explain why this issue has not been detected before), but it severely affects the evaluation of probabilistic generative models, such as Variational Autoencoders and diffusion models.
+          As a workaround, we propose to mix and re-split the official training and test set when SVHN is used for tasks other than classification.
+          We publish a new split that we call <b>SVHN-Remix</b> and the indices we used to create it <a href="#download">below</a>.
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <!-- SVHN Remix. -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">SVHN-Remix: A New Split</h2>
+
+        <div class="content has-text-justified">
+          We propose a new split called <b>SVHN-Remix</b> to alleviate the distribution mismatch in SVHN.
+          <b>SVHN-Remix</b> is created by (i) joining the original train set and test set, (ii) shuffling the indices, and (iii) re-splitting the index into a new remixed train set and test set. 
+          We make sure the size of the new training and test set is the same as before, and the number of samples for each class is also preserved for both the new training and test set. 
+          We provide a <a href=".">notebook</a> that implements this process.
+        </div>
+      </div>
+    </div>
+    <!--/ SVHN Remix. -->
+
+    <!-- Implications. -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Analysis</h2>
+
+        <div class="content has-text-justified">
+          <p>
+            Below, we summarize the key points of our analysis.
+            More details on our method and the results can be found in the <a href=".">paper</a>.
+          </p>
+          <p>
+            We find that the distribution mismatch has little effect on classification tasks for supervised learning, or on sample quality for generative modeling.
+            Figure 1 (left) shows the loss of a classifier trained on SVHN and SVHN-Remix evaluated on the training sets and test sets.
+            SVHN and SVHN-Remix show similar losses.
+          </p>
+          <p>
+            However, we show that for probabilistic generative models such as Variational Autoencoders (VAEs) and variaional diffusion models (VDM), the mismatch leads to a false assessment of the model performance when evaluating test set likelihoods:
+            test set likelihoods on the SVHN dataset are deceptive since the test set appears to be drawn from a simpler distribution than the training set.
+            Figure 1 (middle left), Figure 1 (middle right), and Figure 1 (right) show bits per dimension (BPD) for SVHN and SVHN-Remix evaluated on the training set and test set during training.
+            For SVHN, the order of training and test set BPD is flipped compared to SVHN-Remix.
+            Since we normally evaluate probabilistic generative models models by their likelihood on the test set,  a distribution mismatch between the training set and test set can lead to false evaluation of these models.
+          </p>
+        </div>
+
+        <div>
+          <div class="results-images-container">
+            <img src="./static/images/classifier_loss.pdf" class="results-image" alt="Classifier loss."/>
+            <img src="./static/images/vdm_bpd.pdf" class="results-image" alt="Classifier loss."/>
+            <img src="./static/images/svhn_vae_bpd.pdf" class="results-images" alt="Classifier loss."/>
+          </div>
+          <!-- <br/> -->
+        </div>
+        <p>
+          <b>Figure 1</b>: 
+          (left): classification loss evaluated on training set (dashed) and test set (solid) on SVHN (blue) and SVHN-Remix (green) averaged over five random seeds (lines are means, shaded areas are one standard deviation). 
+          The losses are similar.
+          (middle left) and (middle right) and (right): bits per dimension (BPD) evaluated as a function of training progress on the training set (dotted) and test set (solid) for SVHN (blue) and SVHN-Remix (green).
+          For SVHN, the order of training and test set performance is flipped compared to SVHN-Remix.
+        </p>
+      </div>
+    </div>
+    <!--/ Implications. -->
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Download. -->
+    <div class="columns is-centered" id="download">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Download</h2>
+
+        <div class="content has-text-justified">
+          <p>
+          We provide the new split <b>SVHN-Remix</b> below for download.
+          We provide files with the original file types and the inidices used to create them.
+          </p>
+          <div class="column has-text-centered">
+            <h4>Dataset</h4>
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="."
+                   class="external-link button is-normal is-rounded">
+                  <span class="icon">
+                      <i class="fas fa-database"></i>
+                  </span>
+                  <span>SVHN-Remix (Train)</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="."
+                   class="external-link button is-normal is-rounded">
+                  <span class="icon">
+                      <i class="fas fa-database"></i>
+                  </span>
+                  <span>SVHN-Remix (Test)</span>
+                </a>
+              </span>
+              </div>
+              <p></p>
+            <h4>Indices</h4>
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="."
+                   class="external-link button is-normal is-rounded">
+                  <span class="icon">
+                      <i class="fas fa-sort-numeric-up"></i>
+                  </span>
+                  <span>SVHN-Remix Indices (Train)</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="."
+                   class="external-link button is-normal is-rounded">
+                  <span class="icon">
+                      <i class="fas fa-sort-numeric-up"></i>
+                  </span>
+                  <span>SVHN-Remix Indices (Test)</span>
+                </a>
+              </span>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!--/ Download. -->
+
+  </div>
+</section>
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>TBD</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            We use the template by  <a
+              href="https://github.com/nerfies/nerfies.github.io">Nerfies</a> for this website.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
