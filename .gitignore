@@ -1,3 +1,6 @@
 .DS_Store
 dataset
 index
+.jupyter
+.ipynb_checkpoints
+svhn_remix-*.ipynb
