@@ -64,7 +64,7 @@
             <div class="publication-links">
               <!-- PDF Link. -->
               <span class="link-block">
-                <a href="."
+                <a href="./static/paper/DistShift_SVHN_CR_v2.pdf"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="fas fa-file-pdf"></i>
@@ -132,7 +132,7 @@
         <div class="content has-text-justified">
         <p>
           We show parts of our analysis of the distribution mismatch in SVHN.
-          More details on our method and the results can be found in the <a href=".">paper</a>.
+          More details on our method and the results can be found in the <a href="./static/paper/DistShift_SVHN_CR_v2.pdf">paper</a>.
         </p>
         <p>
           We measure how similar random subsets of training and test set are, and we compare this to how similar two non-overlapping random subsets of the training set are. 
@@ -178,15 +178,15 @@
           </tr>
           <tr>
               <td style="border-right: 1px solid black;">$\mathrm{IS}(\mathcal{D}_\text{train}', \bar{\mathcal{D}}_\text{train})$</td>
-              <td style="">1.132 $\pm$ 0.003</td>
-              <td style="background-color:#E8E8E8;">1.132 $\pm$ 0.005</td>
-              <td style="">1.151 $\pm$ 0.001</td>
+              <td style="">8.507 $\pm$ 0.114</td>
+              <td style="background-color:#E8E8E8;">8.348 $\pm$ 0.568</td>
+              <td style="">7.700 $\pm$ 0.043</td>
           </tr>
           <tr>
               <td style="border-right: 1px solid black;">$\mathrm{IS}(\mathcal{D}_\text{test}', \bar{\mathcal{D}}_\text{train})$</td>
-              <td style="">1.133 $\pm$ 0.002</td>
-              <td style="background-color:#E8E8E8;">1.131 $\pm$ 0.005</td>
-              <td style="">1.151 $\pm$ 0.001</td>
+              <td style="">8.142 $\pm$ 0.501</td>
+              <td style="background-color:#E8E8E8;">8.269 $\pm$ 0.549</td>
+              <td style="">7.692 $\pm$ 0.023</td>
           </tr>
         </table>
 
@@ -206,7 +206,7 @@
           We propose a new split called <b>SVHN-Remix</b> to alleviate the distribution mismatch in SVHN.
           <b>SVHN-Remix</b> is created by (i) joining the original train set and test set, (ii) shuffling the indices, and (iii) re-splitting the index into a new remixed train set and test set. 
           We make sure the size of the new training and test set is the same as before, and the number of samples for each class is also preserved for both the new training and test set. 
-          We provide a <a href=".">notebook</a> that implements this process.
+          We provide a <a href="https://github.com/jzenn/svhn-remix/blob/main/notebooks/svhn_remix.ipynb">notebook</a> that implements this process.
         </div>
       </div>
     </div>
@@ -220,7 +220,7 @@
         <div class="content has-text-justified">
           <p>
             Below, we summarize the key points of the analysis of implications.
-            More details on our method and the results can be found in the <a href=".">paper</a>.
+            More details on our method and the results can be found in the <a href="./static/paper/DistShift_SVHN_CR_v2.pdf">paper</a>.
           </p>
           <p>
             We find that the distribution mismatch has little effect on classification tasks for supervised learning, or on sample quality for generative modeling.
