@@ -1,7 +1,7 @@
 # The SVHN Dataset Is Deceptive for Probabilistic Generative Models Due to a Distribution Mismatch
 <div id="top"></div>
 
-  [![arxiv-link](https://img.shields.io/badge/Paper-PDF-red?style=flat&logo=arXiv&logoColor=red)](.)
+  [![arxiv-link](https://img.shields.io/badge/Paper-PDF-red?style=flat&logo=arXiv&logoColor=red)](https://arxiv.org/abs/2312.02168)
   [![Project Page](https://img.shields.io/badge/Project%20Page-610208)](https://jzenn.github.io/svhn-remix)
   [![Download](https://img.shields.io/badge/Download-074161)](https://jzenn.github.io/svhn-remix#download)
 
